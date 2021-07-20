@@ -1,0 +1,46 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+  datasource:
+    url: jdbc:mysql://localhost:3306/test
+    username: root
+    password: 123456
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+
+    druid:
+      filters: stat,wall
+      stat-view-servlet:
+        enabled: true
+        login-password: 123456
+        login-username: admin
+        resetEnable: false
+
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+
+      aop-patterns: com.atguigu.admin.*
+
+      filter:
+        stat:
+          slow-sql-millis: 1000
+          logSlowSql: true
+          enabled: true
+        wall:
+          enabled: true
+          config:
+            drop-table-allow: false
+  redis:
+    host: 192.168.10.128
+    port: 6379
+    client-type: jedis
+#配置Mybatis规则
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+#  configuration:和mybatis-config.xml冲突 只能写一个 和config-location
+#    map-underscore-to-camel-case: true #可以删除文件
